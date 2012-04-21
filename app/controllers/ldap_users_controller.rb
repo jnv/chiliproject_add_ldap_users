@@ -22,7 +22,7 @@ class LdapUsersController < ApplicationController
     unless users.empty? || auth_source.nil?
 
       users.each do |login|
-        next unless find_by_login(login).nil?
+        next unless User.find_by_login(login).nil?
 
         attrs = auth_source.get_user(login)
         if attrs
