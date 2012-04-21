@@ -37,7 +37,7 @@ class LdapUsersController < ApplicationController
             user.login = login
             user.language = Setting.default_language
             if user.save
-              created << "#{user.name} (#{user.login})"
+              created << login
             else
               rejected << "#{login} (#{user.errors.full_messages.join("; ")}"
             end
