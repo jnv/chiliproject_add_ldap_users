@@ -25,7 +25,7 @@ module AddLdapUsers
           return attrs.except(:dn)
         end
       rescue Net::LDAP::LdapError => text
-        raise "LdapError: " + text
+        raise "LdapError: " + text.to_s
       end
 
     end
