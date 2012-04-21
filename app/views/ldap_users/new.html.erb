@@ -1,11 +1,13 @@
 <h2>Add users from LDAP</h2>
 
-<% form_for :users, :url => {:action => "create"} do |f| %>
+<% form_for :new_users, :url => {:action => "create"} do |f| %>
+
+    <%= f.error_messages %>
 
     <div class="box tabular">
       <p>
         <%= f.label :users, l(:label_user_plural) %>
-        <%= f.text_field :users, :required => true, :size => 40 %>
+        <%= f.text_field :users, :value => @users, :size => 40 %>
       </p>
 
       <p>

@@ -12,43 +12,49 @@ class LdapUsersController < ApplicationController
 
   def create
 
-    users = params[:users][:users].split(/\W+/) #.reject(&:empty?)
-    auth_source = AuthSourceLdap.find(params[:users][:auth_source])
+    users = params[:new_users][:users].split(/\W+/) #.reject(&:empty?)
+    @auth_source = AuthSourceLdap.find(params[:new_users][:auth_source])
 
     created = []
     rejected = []
     not_found = []
 
-    unless users.empty? || auth_source.nil?
+    unless users.empty? or @auth_source.nil?
 
-      users.each do |login|
-        next unless User.find_by_login(login).nil?
+      begin
 
-        attrs = auth_source.get_user(login)
-        if attrs
-          user = User.new(attrs)
-          user.login = login
-          user.language = Setting.default_language
-          if user.save
-            created << user.name
+        users.each do |login|
+          next unless User.find_by_login(login).nil?
+
+          attrs = @auth_source.get_user(login)
+          if attrs
+            user = User.new(attrs)
+            user.login = login
+            user.language = Setting.default_language
+            if user.save
+              created << "#{user.name} (#{user.login})"
+            else
+              rejected << login
+            end
           else
             rejected << login
           end
-        else
-          rejected << login
         end
+
+      rescue => error
+        flash[:error] = error.to_s
       end
 
       unless created.empty?
-        message = "Users were created:<br />"
-        message += created.map { |name| h(name) }.join("<br />")
+        message = "Users were created: "
+        message += created.join(", ")
         flash[:notice] = message
       end
 
       @users = rejected.join(' ')
-      @auth_sources = AuthSourceLdap.all
-      render :action => 'new'
     end
+    @auth_sources = AuthSourceLdap.all
+    render :action => 'new'
 
   end
 
