@@ -18,13 +18,17 @@ class LdapUsersController < ApplicationController
     created = []
     rejected = []
     not_found = []
+    duplicate = []
 
     unless users.empty? or @auth_source.nil?
 
       begin
 
         users.each do |login|
-          next unless User.find_by_login(login).nil?
+          if User.find_by_login(login)
+            duplicate << login
+            next
+          end
 
           attrs = @auth_source.get_user(login)
           if attrs
@@ -34,10 +38,10 @@ class LdapUsersController < ApplicationController
             if user.save
               created << "#{user.name} (#{user.login})"
             else
-              rejected << login
+              rejected << "#{login} (#{user.errors.full_messages.join("; ")}"
             end
           else
-            rejected << login
+            not_found << login
           end
         end
 
@@ -46,12 +50,22 @@ class LdapUsersController < ApplicationController
       end
 
       unless created.empty?
-        message = "Users were created: "
-        message += created.join(", ")
-        flash[:notice] = message
+        flash[:notice] = "Users were created: #{created.join(", ")}"
       end
 
-      @users = rejected.join(' ')
+      unless not_found.empty?
+        flash[:warning] = "Users not found in LDAP: #{not_found.join(", ")}"
+      end
+
+      unless duplicate.empty?
+        flash[:warning] = "Users already present in database: #{duplicate.join(", ")}"
+      end
+
+      unless rejected.empty?
+        flash[:error] = "Could not process users: #{rejected.join("<br />")}"
+      end
+
+      @users = (not_found | rejected).join(' ')
     end
     @auth_sources = AuthSourceLdap.all
     render :action => 'new'
