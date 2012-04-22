@@ -71,6 +71,7 @@ class LdapUsersController < ApplicationController
       end
 
       @users = (users - created).join(' ')
+      flash.discard
     end
     @auth_sources = AuthSourceLdap.all
     render :action => 'new'
