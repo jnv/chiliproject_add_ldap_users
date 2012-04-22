@@ -13,7 +13,7 @@ en:
     one: "User '%{users}' was not found in LDAP"
     other: "Users were not found in LDAP: %{users}"
   ldap_users_duplicated:
-    one: "User '%{user}' is already present in database"
+    one: "User '%{users}' is already present in database"
     other: "Users already present in database: %{users}"
 
   ldap_users_rejected:

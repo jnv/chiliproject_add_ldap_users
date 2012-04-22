@@ -14,13 +14,15 @@ class LdapUsersController < ApplicationController
 
   def create
 
-    users = params[:new_users][:users].split(/\W+/) #.reject(&:empty?)
-    @auth_source = AuthSourceLdap.find(params[:new_users][:auth_source])
-
-    created = []
-    rejected = []
-    not_found = []
-    duplicate = []
+    users = []
+    unless params[:new_users]
+      users = params[:new_users][:users].split(/\W+/) #.reject(&:empty?)
+      @auth_source = AuthSourceLdap.find(params[:new_users][:auth_source])
+      created = []
+      rejected = []
+      not_found = []
+      duplicate = []
+    end
 
     unless users.empty? or @auth_source.nil?
 
