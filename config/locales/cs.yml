@@ -1,0 +1,20 @@
+cs:
+  label_add_ldap_users: "Přidat uživatele z LDAP"
+  #Form
+  label_ldap_username_plural: "Uživatelská jména"
+  text_ldap_username_separator: "Zadejte jedno nebo víe uživatelských jmen (oddělených čárkou nebo mezerou)"
+
+  #Flash messages
+  ldap_users_created:
+    one: "Uživatel '%{users}' byl vytvořen"
+    other: "Uživatelé vytvořeni: %{users}"
+  ldap_users_not_found:
+    one: "Uživatel '%{users}' nebyl nalezen v LDAP"
+    other: "Uživatelé nebyli nalezeni v LDAP: %{users}"
+  ldap_users_duplicated:
+    one: "Uživatel '%{user}' se již nachází v databázi"
+    other: "Uživatelé už se nachází v databázi: %{users}"
+
+  ldap_users_rejected:
+    one: "Chyba při zpracování uživatele: %{users}"
+    other: "Chyba při zpracování uživatelů: %{users}"
