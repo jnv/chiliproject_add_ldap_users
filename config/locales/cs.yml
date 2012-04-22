@@ -2,7 +2,7 @@ cs:
   label_add_ldap_users: "Přidat uživatele z LDAP"
   #Form
   label_ldap_username_plural: "Uživatelská jména"
-  text_ldap_username_separator: "Zadejte jedno nebo víe uživatelských jmen (oddělených čárkou nebo mezerou)"
+  text_ldap_username_separator: "Zadejte jedno nebo více uživatelských jmen (oddělených čárkou nebo mezerou)"
 
   #Flash messages
   ldap_users_created:
