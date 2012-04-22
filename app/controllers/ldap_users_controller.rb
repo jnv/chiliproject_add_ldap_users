@@ -15,7 +15,7 @@ class LdapUsersController < ApplicationController
   def create
 
     users = []
-    unless params[:new_users]
+    unless params[:new_users].empty?
       users = params[:new_users][:users].split(/\W+/) #.reject(&:empty?)
       @auth_source = AuthSourceLdap.find(params[:new_users][:auth_source])
       created = []
