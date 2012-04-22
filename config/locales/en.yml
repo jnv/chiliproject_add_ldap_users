@@ -1,0 +1,21 @@
+# English strings go here for Rails i18n
+en:
+  label_add_ldap_users: "Add LDAP users"
+  #Form
+  label_ldap_username_plural: "Usernames"
+  text_ldap_username_separator: "Enter one or more LDAP usernames (comma or space separated)"
+
+  #Flash messages
+  ldap_users_created:
+    one: "User '%{users}' was created"
+    other: "Users were created: %{users}"
+  ldap_users_not_found:
+    one: "User '%{users}' was not found in LDAP"
+    other: "Users were not found in LDAP: %{users}"
+  ldap_users_duplicated:
+    one: "User '%{user}' is already present in database"
+    other: "Users already present in database: %{users}"
+
+  ldap_users_rejected:
+    one: "Cannot process user: %{users}"
+    other: "Cannot process users: %{users}"

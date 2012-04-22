@@ -1,4 +1,4 @@
-<h2>Add users from LDAP</h2>
+<h2><%= l(:label_add_ldap_users) %></h2>
 
 <% form_for :new_users, :url => {:action => "create"} do |f| %>
 
@@ -6,8 +6,11 @@
 
     <div class="box tabular">
       <p>
-        <%= f.label :users, l(:label_user_plural) %>
+        <%= f.label :users, l(:label_ldap_username_plural) %>
         <%= f.text_field :users, :value => @users, :size => 40 %>
+      </p>
+      <p>
+        <%= l(:text_ldap_username_separator) %>
       </p>
 
       <p>
@@ -16,7 +19,7 @@
       </p>
 
       <p>
-        <%= submit_tag l(:button_create) %>
+        <%= submit_tag l(:button_add) %>
       </p>
     </div>
 <% end %>

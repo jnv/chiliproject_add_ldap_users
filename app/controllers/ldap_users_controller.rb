@@ -9,6 +9,7 @@ class LdapUsersController < ApplicationController
 
   def new
     @auth_sources = AuthSourceLdap.all
+    @users = ''
   end
 
   def create
@@ -51,22 +52,22 @@ class LdapUsersController < ApplicationController
       end
 
       unless created.empty?
-        flash[:notice] = "Users were created: #{created.join(", ")}"
+        flash[:notice] = l(:ldap_users_created, :count => created.count, :users => created.join(", "))
       end
 
       unless not_found.empty?
-        flash[:warning] = "Users not found in LDAP: #{not_found.join(", ")}"
+        flash[:warning] = l(:ldap_users_not_found, :count => not_found.count, :users => not_found.join(", "))
       end
 
       unless duplicate.empty?
-        flash[:warning] = "Users already present in database: #{duplicate.join(", ")}"
+        flash[:warning] = l(:ldap_users_duplicated, :count => duplicate.count, :users => duplicate.join(", "))
       end
 
       unless rejected.empty?
-        flash[:error] = "Could not process users: #{rejected.join("<br />")}"
+        flash[:error] = l(:ldap_users_rejected, :count => rejected.count, :users => rejected.join("<br />"))
       end
 
-      @users = (not_found | rejected).join(' ')
+      @users = (users - created).join(' ')
     end
     @auth_sources = AuthSourceLdap.all
     render :action => 'new'
