@@ -62,7 +62,8 @@ class LdapUsersController < ApplicationController
       end
 
       unless duplicate.empty?
-        flash[:warning] = l(:ldap_users_duplicated, :count => duplicate.count, :users => duplicate.join(", "))
+        flash[:warning] += "<br />" unless flash[:warning].empty?
+        flash[:warning] += l(:ldap_users_duplicated, :count => duplicate.count, :users => duplicate.join(", "))
       end
 
       unless rejected.empty?
